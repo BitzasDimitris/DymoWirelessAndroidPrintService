@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mechcell.dymowirelessprintservice">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_icon_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_icon_logo_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DYMOWirelessPrintService">
+
+        <activity
+            android:name=".ui.AddPrinterActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:permission="android.permission.BIND_PRINT_SERVICE" />
+
+        <activity
+            android:name=".ui.PrinterInfoActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:permission="android.permission.BIND_PRINT_SERVICE" />
+
+        <service
+            android:name=".DymoPrintService"
+            android:permission="android.permission.BIND_PRINT_SERVICE">
+            <intent-filter>
+                <action android:name="android.printservice.PrintService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.printservice"
+                android:resource="@xml/dymo_print_service" />
+        </service>
+
+        <receiver android:name=".intercommunication.DymoPrintServiceActivityReceiver">
+            <intent-filter>
+                <action android:name=".dymo_printing_service.utils.ACTION_PROVIDE_PRINTERS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

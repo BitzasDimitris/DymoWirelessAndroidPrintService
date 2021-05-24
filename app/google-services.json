@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "913383740842",
+    "project_id": "nomad-2438d",
+    "storage_bucket": "nomad-2438d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913383740842:android:3b3e7a9870cdeb1746c7d3",
+        "android_client_info": {
+          "package_name": "com.mechcell.dymowirelessprintservice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913383740842-pmamfrk3s3857u64hnf8jkt08vhm4cuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGyY_G1oJpTS2qTsA1h6CntZG8IeRb9KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913383740842-pmamfrk3s3857u64hnf8jkt08vhm4cuv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913383740842:android:fbdbc30900b22a5846c7d3",
+        "android_client_info": {
+          "package_name": "com.mechcell.nomad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "913383740842-pmamfrk3s3857u64hnf8jkt08vhm4cuv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGyY_G1oJpTS2qTsA1h6CntZG8IeRb9KE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "913383740842-pmamfrk3s3857u64hnf8jkt08vhm4cuv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

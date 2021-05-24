@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/printer_name"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:theme="@style/DYMOWirelessPrintService.AutoTextView"
+        app:layout_constraintBottom_toTopOf="@id/printer_ip"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="DYMOLW3222" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/printer_ip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:theme="@style/DYMOWirelessPrintService.AutoTextView"
+        app:layout_constraintBottom_toTopOf="@id/printer_port"
+        app:layout_constraintTop_toBottomOf="@id/printer_name"
+        tools:text="192.168.1.7" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/printer_port"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:theme="@style/DYMOWirelessPrintService.AutoTextView"
+        app:layout_constraintBottom_toTopOf="@id/select_printer"
+        app:layout_constraintTop_toBottomOf="@id/printer_ip"
+        tools:text="9100" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/select_printer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/select_printer"
+        android:theme="@style/BigButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/printer_port" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
