@@ -92,7 +92,7 @@ class DymoPrinterDiscoverySession(
                 log("Found printers $printers")
                 printers.map { printer -> Pair(printer.info.id, printer) }
                     .forEach { pair -> printersMap[pair.first] = pair.second }
-                printers.first()?.let {
+                printers.firstOrNull()?.let {
                     storePrinterToPrefs(it)
                 }
                 addPrinters(printers.map { printer -> printer.info }.toList())
