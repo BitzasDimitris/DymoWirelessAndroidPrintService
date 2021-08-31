@@ -66,8 +66,6 @@ class DymoPrinterDiscoverySession(
 
     private var discoveryListener: NsdDiscoveryListener? = null
 
-    private var resolveListener: NsdResolveListener? = null
-
 
     private var printerStatusObserver: Disposable? = null
 
@@ -79,9 +77,8 @@ class DymoPrinterDiscoverySession(
 //        }
 
         val discoveryObservable = Observable.create<NetworkPrinterInfo> { emitter ->
-            resolveListener = NsdResolveListener(service, emitter)
             discoveryListener =
-                NsdDiscoveryListener(nsdManager, resolveListener!!, emitter, timeout)
+                NsdDiscoveryListener(nsdManager, service, emitter, timeout)
             nsdManager.discoverServices(serviceType, NsdManager.PROTOCOL_DNS_SD, discoveryListener)
         }
         discoveryObservable!!
@@ -238,14 +235,16 @@ class DymoPrinterDiscoverySession(
 
     private class NsdDiscoveryListener(
         private val nsdManager: NsdManager,
-        private val resolveListener: NsdResolveListener,
+        private val service: DymoPrintService,
         private val emitter: ObservableEmitter<NetworkPrinterInfo>,
         private val timeout: Long
     ) : NsdManager.DiscoveryListener {
 
         override fun onServiceFound(serviceInfo: NsdServiceInfo?) {
-            log("onServiceFound = ${Gson().toJson(serviceInfo)}")
-            nsdManager.resolveService(serviceInfo, resolveListener)
+            log("onServiceFound = ${Gson().toJson(serviceInfo)} , $serviceInfo")
+            if(serviceInfo?.serviceName?.contains("DYMO", true) == true){
+                nsdManager.resolveService(serviceInfo, NsdResolveListener(service, emitter))
+            }
         }
 
         override fun onStopDiscoveryFailed(serviceType: String?, errorCode: Int) {
@@ -298,37 +297,39 @@ class DymoPrinterDiscoverySession(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSuccess { printerName ->
-                    val id = service.generatePrinterId(printerName)
-                    Single.just(id)
-                        .observeOn(Schedulers.io())
-                        .doOnSuccess { printerId ->
-                            val intent = Intent(service, PrinterInfoActivity::class.java).apply {
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                putExtra(EXTRA_CAN_SELECT_PRINTER, true)
-                                putExtra(PRINTER_ID_EXTRA, printerId)
-                                putExtra(PRINTER_IP_EXTRA, serviceInfo.host.hostName)
-                                putExtra(PRINTER_NAME_EXTRA, serviceInfo.serviceName)
-                                putExtra(PRINTER_PORT_EXTRA, serviceInfo.port)
-                            }
-                            val infoIntent = PendingIntent.getActivity(service, 0, intent, 0)
-                            val builder = PrinterInfo.Builder(
-                                printerId,
-                                serviceInfo.serviceName,
-                                PrinterInfo.STATUS_IDLE
-                            )
-                                .setInfoIntent(infoIntent)
-                            val info = addPrinterCapabilities(printerId, builder).build()
-                            emitter.onNext(
-                                NetworkPrinterInfo(
+                    //if(printerName.contains("DYMO", true)){
+                        val id = service.generatePrinterId(printerName)
+                        Single.just(id)
+                            .observeOn(Schedulers.io())
+                            .doOnSuccess { printerId ->
+                                val intent = Intent(service, PrinterInfoActivity::class.java).apply {
+                                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    putExtra(EXTRA_CAN_SELECT_PRINTER, true)
+                                    putExtra(PRINTER_ID_EXTRA, printerId)
+                                    putExtra(PRINTER_IP_EXTRA, serviceInfo.host.hostName)
+                                    putExtra(PRINTER_NAME_EXTRA, serviceInfo.serviceName)
+                                    putExtra(PRINTER_PORT_EXTRA, serviceInfo.port)
+                                }
+                                val infoIntent = PendingIntent.getActivity(service, 0, intent, 0)
+                                val builder = PrinterInfo.Builder(
+                                    printerId,
                                     serviceInfo.serviceName,
-                                    serviceInfo.host.hostName,
-                                    serviceInfo.port,
-                                    info
+                                    PrinterInfo.STATUS_IDLE
                                 )
-                            )
-                            log("onServiceResolved and Completed = ${Gson().toJson(serviceInfo)}")
-                        }
-                        .subscribe()
+                                    .setInfoIntent(infoIntent)
+                                val info = addPrinterCapabilities(printerId, builder).build()
+                                emitter.onNext(
+                                    NetworkPrinterInfo(
+                                        serviceInfo.serviceName,
+                                        serviceInfo.host.hostName,
+                                        serviceInfo.port,
+                                        info
+                                    )
+                                )
+                                log("onServiceResolved and Completed = ${Gson().toJson(serviceInfo)}")
+                            }
+                            .subscribe()
+                    //}
                 }
                 .subscribe()
         }
