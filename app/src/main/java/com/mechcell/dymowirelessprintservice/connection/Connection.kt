@@ -4,6 +4,7 @@ import com.mechcell.dymowirelessprintservice.dymo.DymoPrinterStatus
 import com.mechcell.dymowirelessprintservice.dymo.decodeByteArrayToStatus
 import com.mechcell.dymowirelessprintservice.dymo.getPrinterStatus
 import com.mechcell.nomad.dymo_printing_service.utils.log
+import com.mechcell.nomad.dymo_printing_service.utils.optionalOnError
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -62,11 +63,11 @@ class Connection(private var socket: Socket) : Closeable by socket {
                 }
                 emitter.onComplete()
             } catch (e: UnknownHostException) {
-                emitter.onError(CMUnknownHostException(socket, e))
+                optionalOnError(emitter, CMUnknownHostException(socket, e))
             } catch (e: ConnectException) {
-                emitter.onError(CMConnectException(socket, e))
+                optionalOnError(emitter, CMConnectException(socket, e))
             } catch (e: IOException) {
-                emitter.onError(CMIOException(socket, e))
+                optionalOnError(emitter, CMIOException(socket, e))
             }
         }
         return printerStatusListenerObservable!!

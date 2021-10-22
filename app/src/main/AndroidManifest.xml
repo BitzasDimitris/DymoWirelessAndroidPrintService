@@ -24,6 +24,7 @@
 
         <service
             android:name=".DymoPrintService"
+            android:exported="true"
             android:permission="android.permission.BIND_PRINT_SERVICE">
             <intent-filter>
                 <action android:name="android.printservice.PrintService" />
@@ -33,7 +34,9 @@
                 android:resource="@xml/dymo_print_service" />
         </service>
 
-        <receiver android:name=".intercommunication.DymoPrintServiceActivityReceiver">
+        <receiver
+            android:name=".intercommunication.DymoPrintServiceActivityReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name=".dymo_printing_service.utils.ACTION_PROVIDE_PRINTERS" />
                 <category android:name="android.intent.category.DEFAULT" />

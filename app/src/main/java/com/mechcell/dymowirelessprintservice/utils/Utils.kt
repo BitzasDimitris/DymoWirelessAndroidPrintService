@@ -2,6 +2,9 @@ package com.mechcell.nomad.dymo_printing_service.utils
 
 
 import android.util.Log
+import io.reactivex.rxjava3.core.Emitter
+import io.reactivex.rxjava3.core.SingleEmitter
+import io.reactivex.rxjava3.exceptions.UndeliverableException
 import java.io.File
 import java.io.InputStream
 import java.io.OutputStream
@@ -51,6 +54,26 @@ fun ByteBuffer.toTrimmedArray(): ByteArray {
         bArray[index] = this[index]
     }
     return bArray
+}
+
+fun <T : Any> optionalOnError(emitter: Emitter<T>, e: Exception) {
+    try {
+        emitter.onError(e)
+    } catch (e: UndeliverableException) {
+        e.printStackTrace()
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+    }
+}
+
+fun <T : Any> optionalOnError(emitter: SingleEmitter<T>, e: Exception) {
+    try {
+        emitter.onError(e)
+    } catch (e: UndeliverableException) {
+        e.printStackTrace()
+    } catch (e: java.lang.Exception) {
+        e.printStackTrace()
+    }
 }
 
 
