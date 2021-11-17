@@ -4,6 +4,7 @@ import android.print.PrinterId
 import com.mechcell.dymowirelessprintservice.dymo.DymoPrinterStatus
 import com.mechcell.dymowirelessprintservice.model.NetworkPrinterInfo
 import com.mechcell.nomad.dymo_printing_service.utils.log
+import com.mechcell.nomad.dymo_printing_service.utils.optionalOnError
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
@@ -34,11 +35,11 @@ class DymoPrinterConnectionManager() {
                     connectionMap[networkPrinter.info.id] = Connection(socket)
                     emitter.onSuccess(ConnectionStatus.CONNECTED)
                 } catch (e: UnknownHostException) {
-                    emitter.onError(e)
+                    optionalOnError(emitter, e)
                 } catch (e: ConnectException) {
-                    emitter.onError(e)
+                    optionalOnError(emitter, e)
                 } catch (e: IOException) {
-                    emitter.onError(e)
+                    optionalOnError(emitter, e)
                 }
             }
         }
