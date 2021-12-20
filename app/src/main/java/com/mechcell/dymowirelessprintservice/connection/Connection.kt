@@ -8,7 +8,6 @@ import com.mechcell.nomad.dymo_printing_service.utils.optionalOnError
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import java.io.Closeable
 import java.io.DataInputStream
 import java.io.DataOutputStream
 import java.io.IOException
@@ -17,7 +16,7 @@ import java.net.Socket
 import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 
-class Connection(private var socket: Socket) : Closeable by socket {
+class Connection(private var socket: Socket){
 
     init {
         socket.keepAlive
@@ -67,7 +66,8 @@ class Connection(private var socket: Socket) : Closeable by socket {
             } catch (e: ConnectException) {
                 optionalOnError(emitter, CMConnectException(socket, e))
             } catch (e: IOException) {
-                optionalOnError(emitter, CMIOException(socket, e))
+                e.printStackTrace()
+//                optionalOnError(emitter, CMIOException(socket, e))
             }
         }
         return printerStatusListenerObservable!!
@@ -79,7 +79,6 @@ class Connection(private var socket: Socket) : Closeable by socket {
                 write(commandByteArray)
                 flush()
             }
-
         } else {
             socket = Socket(socket.inetAddress, socket.port)
             sendCommand(commandByteArray)
@@ -89,6 +88,11 @@ class Connection(private var socket: Socket) : Closeable by socket {
 
     fun stopTracking() {
         printerStatusRequestInterval?.dispose()
+    }
+
+    fun close(){
+        if(socket.isConnected)
+            socket.close()
     }
 
 }

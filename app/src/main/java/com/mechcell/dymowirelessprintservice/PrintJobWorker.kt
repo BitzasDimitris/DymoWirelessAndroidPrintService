@@ -276,9 +276,12 @@ class PrintJobWorker(
                                 }"
                             )
                         } else {
-                            val finishCommands = ByteArray(4)
+                            val finishCommands = ByteArray(6)
                             cursor = 0
                             formFeedCommand().forEach {
+                                finishCommands[cursor++] = it
+                            }
+                            finishSessionCommand().forEach {
                                 finishCommands[cursor++] = it
                             }
                             finishSessionCommand().forEach {

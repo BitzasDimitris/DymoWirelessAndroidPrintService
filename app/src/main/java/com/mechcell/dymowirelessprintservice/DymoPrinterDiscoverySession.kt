@@ -214,7 +214,7 @@ class DymoPrinterDiscoverySession(
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             putExtra(EXTRA_CAN_SELECT_PRINTER, true)
                         }
-                        val infoIntent = PendingIntent.getActivity(service, 0, intent, 0)
+                        val infoIntent = PendingIntent.getActivity(service, 0, intent, PendingIntent.FLAG_MUTABLE)
                         val builder = PrinterInfo.Builder(id, printerName, PrinterInfo.STATUS_IDLE)
                             .setInfoIntent(infoIntent)
                         val info = addPrinterCapabilities(id, builder).build()
@@ -310,7 +310,7 @@ class DymoPrinterDiscoverySession(
                                     putExtra(PRINTER_NAME_EXTRA, serviceInfo.serviceName)
                                     putExtra(PRINTER_PORT_EXTRA, serviceInfo.port)
                                 }
-                                val infoIntent = PendingIntent.getActivity(service, 0, intent, 0)
+                                val infoIntent = PendingIntent.getActivity(service, 0, intent, PendingIntent.FLAG_MUTABLE)
                                 val builder = PrinterInfo.Builder(
                                     printerId,
                                     serviceInfo.serviceName,
