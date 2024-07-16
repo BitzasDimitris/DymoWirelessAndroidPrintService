@@ -7,15 +7,15 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.mechcell.dymowirelessprintservice"
         minSdkVersion 26
-        targetSdkVersion 31
+        targetSdkVersion 33
         versionCode 5
-        versionName "1.5"
+        versionName "1.5d"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -37,20 +37,21 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    namespace 'com.mechcell.dymowirelessprintservice'
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
+    implementation 'com.google.android.material:material:1.7.0'
 
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
 
     implementation 'com.pixplicity.easyprefs:library:1.9.0'
 
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'

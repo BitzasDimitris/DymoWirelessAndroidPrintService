@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mechcell.dymowirelessprintservice">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -11,19 +10,19 @@
         android:theme="@style/Theme.DYMOWirelessPrintService">
 
         <activity
-            android:name=".ui.AddPrinterActivity"
+            android:name="com.mechcell.dymowirelessprintservice.ui.AddPrinterActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:permission="android.permission.BIND_PRINT_SERVICE" />
 
         <activity
-            android:name=".ui.PrinterInfoActivity"
+            android:name="com.mechcell.dymowirelessprintservice.ui.PrinterInfoActivity"
             android:exported="true"
             android:launchMode="singleTop"
             android:permission="android.permission.BIND_PRINT_SERVICE" />
 
         <service
-            android:name=".DymoPrintService"
+            android:name="com.mechcell.dymowirelessprintservice.DymoPrintService"
             android:exported="true"
             android:permission="android.permission.BIND_PRINT_SERVICE">
             <intent-filter>
@@ -35,7 +34,7 @@
         </service>
 
         <receiver
-            android:name=".intercommunication.DymoPrintServiceActivityReceiver"
+            android:name="com.mechcell.dymowirelessprintservice.intercommunication.DymoPrintServiceActivityReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name=".dymo_printing_service.utils.ACTION_PROVIDE_PRINTERS" />
